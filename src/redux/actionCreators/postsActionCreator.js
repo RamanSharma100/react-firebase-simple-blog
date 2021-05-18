@@ -142,3 +142,25 @@ export const deleteComment = (id, postId, comments) => (dispatch) => {
       dispatch(removeComment({ filteredComments, postId }));
     });
 };
+
+const deletePost = (postId) => ({
+  type: "DELETE_POST",
+  payload: postId,
+});
+
+export const postDel = (postId) => (dispatch) => {
+  fire
+    .storage()
+    .ref(`posts/${postId}`)
+    .delete()
+    .then(() => {
+      fire
+        .firestore()
+        .collection("posts")
+        .doc(postId)
+        .delete()
+        .then(() => {
+          dispatch(deletePost(postId));
+        });
+    });
+};

@@ -1,8 +1,17 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
+import { postDel } from "../../redux/actionCreators/postsActionCreator";
 
 const PostCard = ({ post, id }) => {
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  const postDelete = () => {
+    dispatch(postDel(post.postId));
+    toast.success("Post deleted successfully!");
+  };
   return (
     <div className="card col-md-5 px-0 m-2" key={id}>
       <img
@@ -34,7 +43,11 @@ const PostCard = ({ post, id }) => {
             <button className="btn btn-outline-primary  my-2  mx-1">
               <i className="fa fa-pencil"></i> Edit Post
             </button>
-            <button className="btn btn-danger  my-2 ">
+            <button
+              type="button"
+              onClick={postDelete}
+              className="btn btn-danger  my-2 "
+            >
               <i className="fa fa-trash-o"></i> Delete Post
             </button>
           </div>
