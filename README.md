@@ -21,7 +21,7 @@ This is the react firebase simple blog with admin panel
 2. on cmd under the project folder
 3. run command :-
 
-### `npm install to install dependencies
+### `npm install to install dependencies`
 
 4. run command:-
 
