@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   doComment,
   doReply,
   getPosts,
+  deleteComment,
 } from "../../redux/actionCreators/postsActionCreator";
 import AddReply from "./AddReply";
 
@@ -204,12 +205,17 @@ const SeePost = () => {
                 {currentPost.post.comments.length > 0 ? (
                   currentPost.post.comments.map((comment, id) => (
                     <>
-                      <form className="px-3 my-3 mx-5 mb-2 py-3 card" key={id}>
+                      <form
+                        className="px-3 my-3 mx-5 mb-2 py-3 card"
+                        key={id + 100}
+                      >
                         <div className="d-flex align-items-center justify-content-between profile">
                           <div className="col-md-6 d-flex">
-                            <div className="col-md-3 rounded-circle py-3 text-center bg-dark text-white">
-                              {comment.name.split(" ")[0][0] +
-                                comment.name.split(" ")[1][0]}
+                            <div className="col-md-3 rounded-circle py-3 text-center bg-dark text-white text-uppercase d-flex align-items-center justify-content-center">
+                              {comment.name.split(" ").length < 2
+                                ? comment.name[0] + comment.name[1]
+                                : comment.name.split(" ")[0][0] +
+                                  comment.name.split(" ")[1][0]}
                             </div>
                             <div className="ml-2 mt-1">
                               <h5 className="card-title mb-0 text-capitalize">
@@ -260,9 +266,11 @@ const SeePost = () => {
                                       key={i}
                                     >
                                       <div className="col-md-6 d-flex">
-                                        <div className="col-md-4 rounded-circle py-3 text-center bg-dark text-white">
-                                          {rply.name.split(" ")[0][0] +
-                                            rply.name.split(" ")[1][0]}
+                                        <div className="col-md-4 rounded-circle py-3 text-center bg-dark text-white text-uppercase">
+                                          {rply.name.split(" ").length < 2
+                                            ? rply.name[0] + rply.name[1]
+                                            : rply.name.split(" ")[0][0] +
+                                              rply.name.split(" ")[1][0]}
                                         </div>
                                         <div className="ml-2 mt-1">
                                           <h5 className="card-title mb-0 text-capitalize">
@@ -341,12 +349,22 @@ const SeePost = () => {
                         </div>
                         {isLoggedIn && currentPost.post.author === userId && (
                           <div className="col-md-12 text-right">
-                            <Link
-                              to="deleteComment"
+                            <button
+                              type="button"
                               className="text-danger btn"
+                              onClick={async () => {
+                                await dispatch(
+                                  deleteComment(
+                                    id,
+                                    currentPost.postId,
+                                    currentPost.post.comments
+                                  )
+                                );
+                                toast.success("Comment Deleted Successfully!");
+                              }}
                             >
                               Delete Comment
-                            </Link>
+                            </button>
                           </div>
                         )}
                       </form>

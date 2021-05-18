@@ -13,6 +13,7 @@ This is the react firebase simple blog with admin panel
 7. Admin Registeration [only can register after login]
 8. Add Posts
 9. Register Admin by any Admin [only can register after login]
+10. Delete Comment by post owner
 
 # How to download and work
 

@@ -6,6 +6,7 @@ import {
   DELETE_POST,
   ADD_COMMENT,
   ADD_REPLY,
+  DELETE_COMMENT,
 } from "../actions/postActions";
 
 const initialState = {
@@ -47,12 +48,24 @@ export default function postReducer(state = initialState, action) {
       const currentPost = state.posts.find(
         (pst) => pst.postId === action.payload.postId
       );
-      currentPost.comments = action.payload.updatedComments;
+      currentPost.post.comments = action.payload.updatedComments;
 
       state = {
         ...state,
         posts: state.posts.map((pst) =>
           pst.postId === action.payload.postId ? currentPost : pst
+        ),
+      };
+      return state;
+    case DELETE_COMMENT:
+      const Post = state.posts.find(
+        (pst) => pst.postId === action.payload.postId
+      );
+      Post.post.comments = action.payload.filteredComments;
+      state = {
+        ...state,
+        posts: state.posts.map((pst) =>
+          pst.postId === action.payload.postId ? Post : pst
         ),
       };
       return state;
