@@ -7,6 +7,7 @@ import {
   ADD_COMMENT,
   ADD_REPLY,
   DELETE_COMMENT,
+  UPDATE_POST,
 } from "../actions/postActions";
 
 const initialState = {
@@ -66,6 +67,20 @@ export default function postReducer(state = initialState, action) {
         ...state,
         posts: state.posts.map((pst) =>
           pst.postId === action.payload.postId ? Post : pst
+        ),
+      };
+      return state;
+    case UPDATE_POST:
+      const current = state.posts.find(
+        (pst) => pst.postId === action.payload.postId
+      );
+      current.post.title = action.payload.data.title;
+      current.post.category = action.payload.data.category;
+      current.post.description = action.payload.data.description;
+      state = {
+        ...state,
+        posts: state.posts.map((pst) =>
+          pst.postId === action.payload.postId ? current : pst
         ),
       };
       return state;

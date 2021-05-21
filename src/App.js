@@ -51,7 +51,7 @@ const App = () => {
           <Route path={"/posts"}>
             <Posts />
           </Route>
-          <Route path={"/post/:id/:title"}>
+          <Route exact path={"/post/:id/:title"}>
             <SeePost />
           </Route>
           <Route path={"/admin"}>

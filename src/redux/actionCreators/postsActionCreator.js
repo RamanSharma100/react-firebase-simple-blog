@@ -164,3 +164,23 @@ export const postDel = (postId) => (dispatch) => {
         });
     });
 };
+
+const updatePost = (data) => ({
+  type: "UPDATE_POST",
+  payload: data,
+});
+
+export const postUpdate = (postId, data) => (dispatch) => {
+  fire
+    .firestore()
+    .collection("posts")
+    .doc(postId)
+    .update({
+      title: data.title,
+      category: data.category,
+      description: data.description,
+    })
+    .then(() => {
+      dispatch(updatePost({ postId, data }));
+    });
+};

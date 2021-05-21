@@ -40,13 +40,19 @@ const PostCard = ({ post, id }) => {
             <i className="fa fa-eye"></i> See Post
           </button>
           <div className="text-right">
-            <button className="btn btn-outline-primary  my-2  mx-1">
+            <button
+              type="button"
+              onClick={() =>
+                history.push(`/admin/dashboard/post/${post.postId}/edit`)
+              }
+              className="btn btn-outline-primary  my-2  mx-1"
+            >
               <i className="fa fa-pencil"></i> Edit Post
             </button>
             <button
               type="button"
               onClick={postDelete}
-              className="btn btn-danger  my-2 "
+              className="btn btn-danger my-2ss"
             >
               <i className="fa fa-trash-o"></i> Delete Post
             </button>
